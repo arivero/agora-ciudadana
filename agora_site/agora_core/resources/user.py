@@ -175,11 +175,11 @@ class UserResource(GenericResource):
             url(r"^(?P<resource_name>%s)/register%s$" \
                 % (self._meta.resource_name, trailing_slash()),
                 self.wrap_form(form_class=APISignupForm,
-                method="POST"), name="api_user_register"),
+                method="POST", anon=True), name="api_user_register"),
 
             url(r"^(?P<resource_name>%s)/login%s$" % (self._meta.resource_name,
                 trailing_slash()), self.wrap_form(
-                form_class=LoginForm, method="POST"),
+                form_class=LoginForm, method="POST", anon=True),
                 name="api_username_login"),
 
             url(r"^(?P<resource_name>%s)/logout%s$" % (self._meta.resource_name,
@@ -299,9 +299,12 @@ class UserResource(GenericResource):
     def user_invite(self, request, **kwargs):
         if request.method != 'POST':
             raise ImmediateHttpResponse(response=http.HttpMethodNotAllowed())
-        data = self.deserialize_post_data(request)
-        emails = map(str.strip, data['emails'])
-        agoraid = data['agoraid']
+        try:
+            data = self.deserialize_post_data(request)
+            emails = map(str.strip, data['emails'])
+            agoraid = data['agoraid']
+        except:
+            raise ImmediateHttpResponse(response=http.HttpBadRequest())
         agora = get_object_or_404(Agora, pk=agoraid)
         welcome_message = data.get('welcome_message', _("Welcome to this agora"))
 
@@ -316,7 +319,7 @@ class UserResource(GenericResource):
                 raise ImmediateHttpResponse(response=http.HttpBadRequest())
 
         for email in emails:
-            q = User.objects.filter(Q(email=email)|Q(username=email))
+            q = User.objects.filter(Q(email__iexact=email)|Q(username__iexact=email))
             exists = q.exists()
             if exists:
                 # if user exists in agora, we'll add it directly

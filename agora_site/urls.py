@@ -18,19 +18,9 @@ from djsgettext.views import I18n
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.views.generic.simple import redirect_to
-from django.contrib import admin
-
-admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    # Uncomment the admin/doc line below to enable admin documentation:
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    (r'^admin/', include(admin.site.urls)),
-
     (r'^accounts/', include('agora_site.accounts.urls')),
 
     (r'^comments/', include('django.contrib.comments.urls')),
@@ -40,6 +30,15 @@ urlpatterns = patterns('',
     (r'', include('social_auth.urls')),
 
     (r'', include('agora_site.agora_core.urls')),
+
+    url(r'^captcha/', include('captcha.urls')),
 )
+
+if 'django.contrib.admin' in settings.INSTALLED_APPS and settings.DEBUG:
+    from django.contrib import admin
+    admin.autodiscover()
+    urlpatterns += patterns('',
+        (r'^admin/', include(admin.site.urls))
+    )
 
 urlpatterns += staticfiles_urlpatterns()

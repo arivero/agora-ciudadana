@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 16:35+0200\n"
+"POT-Creation-Date: 2014-12-01 09:18+0100\n"
 "PO-Revision-Date: 2013-06-04 17:44-0000\n"
 "Last-Translator: \n"
 "Language-Team: Agora Ciudadana Translation Team <agora-ciudadana-"
@@ -33,97 +33,113 @@ msgstr "Inglés"
 msgid "Galician"
 msgstr "Gallego"
 
-#: accounts/forms.py:52 accounts/forms.py:132
+#: settings.py:73
+msgid "Basque"
+msgstr "Vasco"
+
+#: accounts/forms.py:56 accounts/forms.py:209
 #: accounts/templates/accounts/profile_detail.html:24
 msgid "Name"
 msgstr "Nombre"
 
-#: accounts/forms.py:56 accounts/forms.py:133 accounts/forms.py:217
+#: accounts/forms.py:60 accounts/forms.py:210 accounts/forms.py:294
 msgid "Sign up"
 msgstr "Registrarme"
 
-#: accounts/forms.py:76
+#: accounts/forms.py:84
 #, python-format
-msgid "<a href=\"%(url)s\">Forgot your "
-msgstr "<a href=\"%(url)s\">Olvidaste tu "
+msgid "<a href=\"%(url)s\">Forgot your password?</a>"
+msgstr "<a href=\"%(url)s\">¿Olvidaste tu contraseña?</a>"
 
-#: accounts/forms.py:79 accounts/templates/accounts/auth_forms.html:9
+#: accounts/forms.py:87 accounts/templates/accounts/auth_forms.html:9
 #: accounts/templates/accounts/auth_forms.html:31
 #: accounts/templates/accounts/signin_form.html:8
 #: accounts/templates/accounts/signin_form.html:31
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: accounts/forms.py:86 accounts/templates/accounts/email_form.html:12
+#: accounts/forms.py:108 accounts/forms.py:147
+msgid ""
+"Please enter a correct username or email and password. Note that both fields "
+"are case-sensitive."
+msgstr ""
+"Por favor, introduce un nombre de usuario o email correcto. Ten en cuenta "
+"que las mayúsculas y minúsculas son diferentes."
+
+#: accounts/forms.py:120
+msgid "Please, for security reasons validate the captcha"
+msgstr "Por favor, valida el captcha"
+
+#: accounts/forms.py:163 accounts/templates/accounts/email_form.html:12
 #: accounts/templates/accounts/email_form.html:19
 #: accounts/templates/accounts/password_form.html:14
 #: accounts/templates/accounts/profile_detail.html:17
 #: accounts/templates/accounts/profile_form.html:15
-#: agora_core/forms/__init__.py:141 agora_core/forms/__init__.py:150
+#: agora_core/forms/__init__.py:148 agora_core/forms/__init__.py:157
 msgid "Change email"
 msgstr "Cambiar email"
 
-#: accounts/forms.py:94
+#: accounts/forms.py:171
 msgid "Reset Password"
 msgstr "Recuperar Contraseña"
 
-#: accounts/forms.py:95 accounts/urls.py:70 accounts/urls.py:91
+#: accounts/forms.py:172 accounts/urls.py:69 accounts/urls.py:90
 msgid "Reset password"
 msgstr "Recuperar Contraseña"
 
-#: accounts/forms.py:101
+#: accounts/forms.py:178
 msgid "Set new Password"
 msgstr "Nueva contraseña"
 
-#: accounts/forms.py:102
+#: accounts/forms.py:179
 msgid "Set new password"
 msgstr "Nueva contraseña"
 
-#: accounts/forms.py:116
+#: accounts/forms.py:193
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: accounts/forms.py:117 agora_core/forms/user.py:336
+#: accounts/forms.py:194 agora_core/forms/user.py:374
 msgid "Username must contain only letters, numbers, dots and underscores."
 msgstr ""
 "El nombre de usuario solo puede contener letras, números, guiones bajos y "
 "puntos"
 
-#: accounts/forms.py:120
+#: accounts/forms.py:197
 msgid "Create password"
 msgstr "Crear contraseña"
 
-#: accounts/forms.py:123
+#: accounts/forms.py:200
 msgid "Repeat password"
 msgstr "Repetir contraseña"
 
-#: accounts/forms.py:147 agora_core/forms/user.py:356
+#: accounts/forms.py:224 agora_core/forms/user.py:394
 msgid "This username is already taken."
 msgstr "Este nombre de usuario ya está en uso."
 
-#: accounts/forms.py:149 agora_core/forms/user.py:358
+#: accounts/forms.py:226 agora_core/forms/user.py:396
 msgid "This username is not allowed."
 msgstr "Este nombre de usuario no está permitido."
 
-#: accounts/forms.py:161 agora_core/forms/__init__.py:200
-#: agora_core/forms/user.py:384
+#: accounts/forms.py:238 agora_core/forms/__init__.py:207
+#: agora_core/forms/user.py:424
 msgid "The two password fields didn't match."
 msgstr "Las contraseñas no coinciden."
 
-#: accounts/forms.py:195 accounts/forms.py:263
+#: accounts/forms.py:272 accounts/forms.py:340
 msgid "Your account has been activated and you have been signed in."
 msgstr "Hemos activado tu cuenta y has iniciado la sesión"
 
-#: accounts/forms.py:208 accounts/templates/accounts/profile_detail.html:27
-#: agora_core/forms/__init__.py:107
+#: accounts/forms.py:285 accounts/templates/accounts/profile_detail.html:27
+#: agora_core/forms/__init__.py:114
 msgid "Email"
 msgstr ""
 
-#: accounts/forms.py:229
+#: accounts/forms.py:306
 msgid "This email is already taken."
 msgstr "Este nombre de usuario ya está en uso."
 
-#: accounts/urls.py:71
+#: accounts/urls.py:70
 msgid ""
 "<h2>How it works?</h2><p>You've proved your identity by clicking the link we "
 "sent you by email. Now enter your new password and try not to forget it this "
@@ -134,15 +150,14 @@ msgstr ""
 "trata de no olvidarla esta vez.</p>"
 
 #: accounts/views.py:36
-#, fuzzy
 msgid ""
 "Registration successful! We have sent the activation link to your email "
 "address, look it up. If you don't receive the email, please try to locate it "
 "in the SPAM folder."
 msgstr ""
 "¡Te has registrado con éxito! Hemos enviado el enlace de activación a tu "
-"dirección de email, míralo. Si no recibes el email, por favor comprueba "
-"la carpeta de SPAM, puede que se haya colado ahí."
+"dirección de email, míralo. Si no recibes el email, por favor comprueba la "
+"carpeta de SPAM, puede que se haya colado ahí."
 
 #: accounts/views.py:43
 msgid ""
@@ -293,7 +308,7 @@ msgstr ""
 "filtro antispam se equivoca."
 
 #: accounts/templates/accounts/disabled.html:13
-#: agora_core/forms/__init__.py:644 agora_core/forms/__init__.py:646
+#: agora_core/forms/__init__.py:664 agora_core/forms/__init__.py:668
 #: agora_core/templates/agora_core/contact_form.html:5
 msgid "Contact"
 msgstr "Contacto"
@@ -382,7 +397,7 @@ msgstr "Editar perfil"
 #: accounts/templates/accounts/password_form.html:21
 #: accounts/templates/accounts/profile_detail.html:16
 #: accounts/templates/accounts/profile_form.html:14
-#: agora_core/forms/__init__.py:142 agora_core/forms/__init__.py:151
+#: agora_core/forms/__init__.py:149 agora_core/forms/__init__.py:158
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
@@ -887,13 +902,13 @@ msgstr ""
 msgid "You accepted  %(username)s membership request in %(agora)s."
 msgstr "Has aceptado la petición para ser miembro de %(username)s en %(agora)s"
 
-#: agora_core/views.py:1160 agora_core/resources/agora.py:645
+#: agora_core/views.py:1160 agora_core/resources/agora.py:661
 #, python-format
 msgid "Your membership has been accepted at %(agora)s. Congratulations!"
 msgstr "Has sido aceptado como miembro de %(agora)s. ¡Enhorabuena!"
 
 #: agora_core/views.py:1168 agora_core/models/__init__.py:133
-#: agora_core/resources/agora.py:653
+#: agora_core/resources/agora.py:669
 #, python-format
 msgid "%(site)s - you are now member of %(agora)s"
 msgstr "%(site)s - ahora eres miembro de %(agora)s"
@@ -1017,7 +1032,7 @@ msgid ""
 "Your have been removed from membership from %(agora)s . Sorry about that!"
 msgstr "Lo siento, pero se te ha retirado la membresía en %(agora)s."
 
-#: agora_core/views.py:1540 agora_core/resources/agora.py:934
+#: agora_core/views.py:1540 agora_core/resources/agora.py:950
 #, python-format
 msgid "%(site)s - membership removed from %(agora)s"
 msgstr "%(site)s - membresía retirada en %(agora)s"
@@ -1066,11 +1081,11 @@ msgstr "Lo sentimos, pero no tienes permisos para comentar en %(agora)s."
 msgid "You can't cancel a vote in a closed election."
 msgstr "No puedes cancelar un voto en una votación ya cerrada."
 
-#: agora_core/views.py:1836 agora_core/resources/election.py:538
+#: agora_core/views.py:1836 agora_core/resources/election.py:552
 msgid "You didn't participate in this election."
 msgstr "No participaste en esta votación."
 
-#: agora_core/views.py:1861 agora_core/resources/election.py:561
+#: agora_core/views.py:1861 agora_core/resources/election.py:575
 #, python-format
 msgid "Vote cancelled for election %s"
 msgstr "Voto cancelado para la votación %s"
@@ -1089,33 +1104,33 @@ msgstr "Lo sentimos, pero no tienes permisos administrativos en %(agoraname)s."
 msgid "Agora settings changed for %(agoraname)s."
 msgstr "Cambiada la configuración de Ágora para %(agoraname)s."
 
-#: agora_core/forms/__init__.py:62 agora_core/forms/__init__.py:63
+#: agora_core/forms/__init__.py:63 agora_core/forms/__init__.py:64
 #: agora_core/templates/agora_core/create_agora_form.html:6
 msgid "Create Agora"
 msgstr "Crear Ágora"
 
-#: agora_core/forms/__init__.py:94 agora_core/forms/user.py:132
+#: agora_core/forms/__init__.py:101 agora_core/forms/user.py:145
 msgid "Avatar"
 msgstr ""
 
-#: agora_core/forms/__init__.py:95
+#: agora_core/forms/__init__.py:102
 msgid "Upload an image to use as avatar instead of gravatar service"
 msgstr "Subir una imagen para usar como avatar en vez la del servicio gravatar"
 
-#: agora_core/forms/__init__.py:96
+#: agora_core/forms/__init__.py:103
 msgid "Remove this avatar"
 msgstr "Eliminar este avatar"
 
-#: agora_core/forms/__init__.py:99 agora_core/models/__init__.py:240
+#: agora_core/forms/__init__.py:106 agora_core/models/__init__.py:240
 #: agora_core/models/agora.py:87 agora_core/models/election.py:207
 msgid "Short Description"
 msgstr "Descripción Breve"
 
-#: agora_core/forms/__init__.py:100
+#: agora_core/forms/__init__.py:107
 msgid "Say something about yourself (140 chars max)"
 msgstr "Di algo sobre ti mismo (140 caracteres máximo)"
 
-#: agora_core/forms/__init__.py:102 agora_core/forms/user.py:176
+#: agora_core/forms/__init__.py:109 agora_core/forms/user.py:194
 #: agora_core/models/__init__.py:242 agora_core/models/agora.py:89
 #: agora_core/templates/agora_core/agora_bio.html:5
 #: agora_core/templates/agora_core/user_bio.html:5
@@ -1123,168 +1138,168 @@ msgstr "Di algo sobre ti mismo (140 caracteres máximo)"
 msgid "Biography"
 msgstr "Biografía"
 
-#: agora_core/forms/__init__.py:103
+#: agora_core/forms/__init__.py:110
 msgid "Tell us about you, use as much text as needed"
 msgstr "Cuéntanos acerca de tí, usa tanto espacio como necesites"
 
-#: agora_core/forms/__init__.py:109 agora_core/models/__init__.py:253
+#: agora_core/forms/__init__.py:116 agora_core/models/__init__.py:253
 msgid "Receive email updates"
 msgstr "Recibe actualizaciones por email"
 
-#: agora_core/forms/__init__.py:112
+#: agora_core/forms/__init__.py:119
 msgid "Current password"
 msgstr "Contraseña actual"
 
-#: agora_core/forms/__init__.py:113
+#: agora_core/forms/__init__.py:120
 msgid "Provide your current password for security, required field"
 msgstr "Escribe tu contraseña actual por seguridad, campo obligatorio"
 
-#: agora_core/forms/__init__.py:117
+#: agora_core/forms/__init__.py:124
 msgid "New password"
 msgstr "Nueva contraseña"
 
-#: agora_core/forms/__init__.py:118
+#: agora_core/forms/__init__.py:125
 msgid "Specify your new password if you want to change it, or leave it blank"
 msgstr ""
 "Especifica tu nueva contraseña si quieres cambiarla, o déjala en blanco"
 
-#: agora_core/forms/__init__.py:121
+#: agora_core/forms/__init__.py:128
 msgid "Repeat new password"
 msgstr "Repite la nueva contraseña"
 
-#: agora_core/forms/__init__.py:138 agora_core/forms/__init__.py:147
+#: agora_core/forms/__init__.py:145 agora_core/forms/__init__.py:154
 msgid "Profile"
 msgstr "Perfil"
 
-#: agora_core/forms/__init__.py:146 templates/base.html:137
+#: agora_core/forms/__init__.py:153 templates/base.html:136
 msgid "Security"
 msgstr "Seguridad"
 
-#: agora_core/forms/__init__.py:153 agora_core/forms/__init__.py:215
-#: agora_core/forms/__init__.py:439
+#: agora_core/forms/__init__.py:160 agora_core/forms/__init__.py:222
+#: agora_core/forms/__init__.py:458
 msgid "Save settings"
 msgstr "Guardar configuración"
 
-#: agora_core/forms/__init__.py:182 agora_core/forms/user.py:241
-#: agora_core/forms/user.py:364
+#: agora_core/forms/__init__.py:189 agora_core/forms/user.py:265
+#: agora_core/forms/user.py:402
 msgid "This email is already in use. Please supply a different email."
 msgstr "Este email ya está en uso. Escribe un email distinto por favor."
 
-#: agora_core/forms/__init__.py:188 agora_core/forms/user.py:266
+#: agora_core/forms/__init__.py:195 agora_core/forms/user.py:293
 msgid "Invalid password."
 msgstr "Contraseña inválida."
 
-#: agora_core/forms/__init__.py:214 agora_core/forms/__init__.py:438
+#: agora_core/forms/__init__.py:221 agora_core/forms/__init__.py:457
 msgid "General settings"
 msgstr "Configuración general"
 
-#: agora_core/forms/__init__.py:230
+#: agora_core/forms/__init__.py:246
 #: agora_core/models/voting_systems/base_stv.py:55
 #: agora_core/models/voting_systems/plurality.py:50
 #: agora_core/models/voting_systems/wright_stv.py:53
 msgid "Invalid questions format"
 msgstr "Formato de pregunta no válido"
 
-#: agora_core/forms/__init__.py:254 agora_core/models/election.py:236
-#: agora_core/resources/election.py:91
+#: agora_core/forms/__init__.py:270 agora_core/models/election.py:236
+#: agora_core/resources/election.py:90
 msgid "Questions"
 msgstr "Preguntas"
 
-#: agora_core/forms/__init__.py:257 agora_core/forms/__init__.py:419
-#: agora_core/resources/election.py:93
+#: agora_core/forms/__init__.py:273 agora_core/forms/__init__.py:438
+#: agora_core/resources/election.py:92
 msgid "Start voting"
 msgstr "Comenzar votación"
 
-#: agora_core/forms/__init__.py:258 agora_core/forms/__init__.py:420
+#: agora_core/forms/__init__.py:274 agora_core/forms/__init__.py:439
 msgid "Not required, you can choose to start the voting period manually"
 msgstr ""
 "No requerido, puedes elegir comenzar el periodo de votación manualmente"
 
-#: agora_core/forms/__init__.py:259 agora_core/forms/__init__.py:423
-#: agora_core/resources/election.py:94
+#: agora_core/forms/__init__.py:275 agora_core/forms/__init__.py:442
+#: agora_core/resources/election.py:93
 msgid "End voting"
 msgstr "Finalizar votación"
 
-#: agora_core/forms/__init__.py:260 agora_core/forms/__init__.py:424
+#: agora_core/forms/__init__.py:276 agora_core/forms/__init__.py:443
 msgid "Not required, you can choose to end the voting period manually"
 msgstr ""
 "No es necesario, puedes elegir finalizar el periodo de votación manualmente"
 
-#: agora_core/forms/__init__.py:270
+#: agora_core/forms/__init__.py:286
 msgid "Create election"
 msgstr "Crear votación"
 
-#: agora_core/forms/__init__.py:272
+#: agora_core/forms/__init__.py:288
 #: agora_core/templates/agora_core/create_election_form.html:5
 msgid "Create Election"
 msgstr "Crear Votación"
 
-#: agora_core/forms/__init__.py:293 agora_core/forms/__init__.py:451
+#: agora_core/forms/__init__.py:312 agora_core/forms/__init__.py:470
 msgid "You need to either provide none or both start and end voting dates"
 msgstr ""
 "Puedes no establecer ninguna fecha o establecer ambas, la de comienzo y "
 "finalización de la votación"
 
-#: agora_core/forms/__init__.py:297 agora_core/forms/__init__.py:455
-#: agora_core/resources/election.py:118
+#: agora_core/forms/__init__.py:316 agora_core/forms/__init__.py:474
+#: agora_core/resources/election.py:132
 msgid "Invalid start date, must be in the future"
 msgstr "Fecha de comienzo inválida, debe situarse en el futuro"
 
-#: agora_core/forms/__init__.py:301 agora_core/forms/__init__.py:459
-#: agora_core/resources/election.py:122
+#: agora_core/forms/__init__.py:320 agora_core/forms/__init__.py:478
+#: agora_core/resources/election.py:136
 msgid "Voting time must be at least 1 hour"
 msgstr "El tiempo de votación debe ser al menos de 1 hora"
 
-#: agora_core/forms/__init__.py:377 agora_core/tasks/election.py:257
+#: agora_core/forms/__init__.py:396 agora_core/tasks/election.py:259
 #, python-format
 msgid "Election %s created"
 msgstr "Elección %s creada"
 
-#: agora_core/forms/__init__.py:531
+#: agora_core/forms/__init__.py:550
 msgid "Vote secretly"
 msgstr "Votar de forma secreta"
 
-#: agora_core/forms/__init__.py:533
+#: agora_core/forms/__init__.py:552
 msgid "Vote in public as a delegate"
 msgstr "Votar públicamente como delegado"
 
-#: agora_core/forms/__init__.py:536 agora_core/forms/__init__.py:544
+#: agora_core/forms/__init__.py:555 agora_core/forms/__init__.py:563
 msgid "Vote in public as a non-member delegate"
 msgstr "Votar públicamente como delegado no-miembro"
 
-#: agora_core/forms/__init__.py:541
+#: agora_core/forms/__init__.py:560
 #: agora_core/templates/agora_core/election_base.html:211
 #: agora_core/templates/agora_core/election_base.html:220
 msgid "Vote"
 msgstr "Vota"
 
-#: agora_core/forms/__init__.py:620
+#: agora_core/forms/__init__.py:639
 msgid ""
 "Explain your public position on the vote if you want and if your vote is "
 "public"
 msgstr "Explica si quieres tu posición públicamente y si tu voto es público"
 
-#: agora_core/forms/__init__.py:632
+#: agora_core/forms/__init__.py:651
 msgid "Your name"
 msgstr "Tu nombre"
 
-#: agora_core/forms/__init__.py:634
+#: agora_core/forms/__init__.py:653
 msgid "Your contact email"
 msgstr "Tu email de contacto"
 
-#: agora_core/forms/__init__.py:635
+#: agora_core/forms/__init__.py:654
 msgid "Subject"
 msgstr "Asunto"
 
-#: agora_core/forms/__init__.py:637
+#: agora_core/forms/__init__.py:656
 msgid "Message"
 msgstr "Mensaje"
 
-#: agora_core/forms/__init__.py:647
+#: agora_core/forms/__init__.py:669
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: agora_core/forms/__init__.py:659
+#: agora_core/forms/__init__.py:680
 #, python-format
 msgid ""
 "[%(site)s] Message from %(name)s <%(email)s>: \n"
@@ -1295,7 +1310,7 @@ msgstr ""
 "\n"
 " %(msg)s"
 
-#: agora_core/forms/__init__.py:668
+#: agora_core/forms/__init__.py:689
 msgid "You have contacted us, we'll answer you as soon as possible."
 msgstr "Has contactado con nosotros, te contestaremos lo antes posible."
 
@@ -1311,41 +1326,53 @@ msgstr "Enviar"
 msgid "You must be authenticated to post a comment"
 msgstr "Debes autenticarte para publicar un comentario"
 
-#: agora_core/forms/comment.py:128 agora_core/forms/user.py:112
+#: agora_core/forms/comment.py:128 agora_core/forms/user.py:125
 #, python-format
 msgid "Watch your mouth! The word %s is not allowed here."
 msgid_plural "Watch your mouth! The words %s are not allowed here."
 msgstr[0] "¡No digas palabrotas! Aquí no se permite la palabra %s."
 msgstr[1] "¡No digas palabrotas! Aquí no se permiten las palabras %s."
 
-#: agora_core/forms/user.py:82
+#: agora_core/forms/user.py:95
 #, python-format
 msgid "Message from %s"
 msgstr "Mensaje de %s"
 
-#: agora_core/forms/user.py:254
+#: agora_core/forms/user.py:161
+msgid "Too large dimensions."
+msgstr "Demasiado grande."
+
+#: agora_core/forms/user.py:261 agora_core/forms/user.py:305
+msgid "You need to supply the old password."
+msgstr "Tienes que proporcionar la contraseña antigua."
+
+#: agora_core/forms/user.py:278
 msgid "This username is already in use. Please supply a different username."
 msgstr ""
 "Este nombre de usuario ya está en uso. Escribe otro nombre de usuario por "
 "favor."
 
-#: agora_core/forms/user.py:280
+#: agora_core/forms/user.py:310
 msgid "The two password fields didn't match or are insecure."
 msgstr "Las contraseñas no coinciden o no son seguras."
 
-#: agora_core/forms/user.py:294
+#: agora_core/forms/user.py:325
+msgid "Invalid first name."
+msgstr "Nombre no válido."
+
+#: agora_core/forms/user.py:331
 msgid "FNMT users cannot change their names."
 msgstr "Los usuario con certificado FNMT no pueden cambiar el nombre."
 
-#: agora_core/forms/user.py:303
+#: agora_core/forms/user.py:340
 msgid "You need to be authenticated"
 msgstr "Debes autenticarte"
 
-#: agora_core/forms/user.py:370
+#: agora_core/forms/user.py:410
 msgid "Invalid activation secret. "
 msgstr "Secreto de activación no válido. "
 
-#: agora_core/forms/user.py:372
+#: agora_core/forms/user.py:412
 msgid "Auto activation not allowed."
 msgstr "No se permite la activación automática."
 
@@ -1694,7 +1721,7 @@ msgstr "La votación está <b>archivada y descartada</b>."
 msgid "Multi-seat ranked voting - STV (Single Transferable Vote)"
 msgstr "Votación ordenada multi-puesto - VUT (Voto Único Transferible)"
 
-#: agora_core/models/voting_systems/base_stv.py:120
+#: agora_core/models/voting_systems/base_stv.py:126
 #: agora_core/models/voting_systems/wright_stv.py:117
 msgid "Invalid answer format"
 msgstr "Formato de respuesta no válido."
@@ -1718,29 +1745,29 @@ msgstr ""
 "Selecciona una lista entre las múltiples opciones - Nombre técnico: VUT de "
 "Wright (Voto Único Transferible)"
 
-#: agora_core/resources/agora.py:580
+#: agora_core/resources/agora.py:596
 #, python-format
 msgid "You canceled your membership request at %(agora)s"
 msgstr "Has cancelado tu petición para ser miembro de %(agora)s."
 
-#: agora_core/resources/agora.py:588
+#: agora_core/resources/agora.py:604
 #, python-format
 msgid "%(site)s - canceled your membership request at %(agora)s"
 msgstr ""
 "%(site)s ha cancelado tu solicitud de ser miembro en el Ã¡gora %(agora)s"
 
-#: agora_core/resources/agora.py:698
+#: agora_core/resources/agora.py:714
 #, python-format
 msgid "Your membership request at %(agora)s has been denied. Sorry about that!"
 msgstr ""
 "Lo siento, pero tu petición de membresía en %(agora)s ha sido descartada."
 
-#: agora_core/resources/agora.py:706
+#: agora_core/resources/agora.py:722
 #, python-format
 msgid "%(site)s - membership request denied at %(agora)s"
 msgstr "%(site)s - solicitud de membresía descartada en %(agora)s"
 
-#: agora_core/resources/agora.py:751
+#: agora_core/resources/agora.py:767
 #, python-format
 msgid ""
 "As administrator of %(agora)s, %(user)s has added you to this agora. You can "
@@ -1752,47 +1779,47 @@ msgstr ""
 "que el usuario está haciendo un uso incorrecto, por favor, contacta con los "
 "administradores del sitio."
 
-#: agora_core/resources/agora.py:763
+#: agora_core/resources/agora.py:779
 #, python-format
 msgid "%(site)s - Added as member to %(agora)s"
 msgstr "%(site)s - Ahora eres miembro de %(agora)s"
 
-#: agora_core/resources/agora.py:811
+#: agora_core/resources/agora.py:827
 #, python-format
 msgid "Your membership of %(agora)s has been removed. Sorry about that!"
 msgstr "Ya no eres miembro del ágora %(agora)s. ¡Lo sentimos!"
 
-#: agora_core/resources/agora.py:819
+#: agora_core/resources/agora.py:835
 #, python-format
 msgid "%(site)s - membership of %(agora)s removed"
 msgstr "%(site)s - membresía retirada en ágora %(agora)s"
 
-#: agora_core/resources/agora.py:880
+#: agora_core/resources/agora.py:896
 #, python-format
 msgid "You canceled your admin membership request at %(agora)s"
 msgstr "Has cancelado tu solicitud de administrador en %(agora)s."
 
-#: agora_core/resources/agora.py:888
+#: agora_core/resources/agora.py:904
 #, python-format
 msgid "%(site)s - canceled your admin membership request at %(agora)s"
 msgstr "%(site)s - cancelada tu solicitud para ser administrador de %(agora)s"
 
-#: agora_core/resources/agora.py:926
+#: agora_core/resources/agora.py:942
 #, python-format
 msgid "You have removed your membership from %(agora)s"
 msgstr "Has eliminado tu membresía de %(agora)s."
 
-#: agora_core/resources/agora.py:983
+#: agora_core/resources/agora.py:999
 #, python-format
 msgid "Your admin membership has been accepted at %(agora)s. Congratulations!"
 msgstr "Has sido aceptado como administrador de %(agora)s. ¡Enhorabuena!"
 
-#: agora_core/resources/agora.py:991
+#: agora_core/resources/agora.py:1007
 #, python-format
 msgid "%(site)s - you are now admin of %(agora)s"
 msgstr "%(site)s - ahora eres administrador de %(agora)s"
 
-#: agora_core/resources/agora.py:1038
+#: agora_core/resources/agora.py:1054
 #, python-format
 msgid ""
 "Your admin membership request at %(agora)s has been denied. Sorry about that!"
@@ -1800,12 +1827,12 @@ msgstr ""
 "¡Vaya! Tu petición para ser administrador de %(agora)s ha sido descartada. "
 "¡Lo sentimos!"
 
-#: agora_core/resources/agora.py:1046
+#: agora_core/resources/agora.py:1062
 #, python-format
 msgid "%(site)s - admin membership request denied at %(agora)s"
 msgstr "%(site)s - petición para ser administrador descartada en %(agora)s"
 
-#: agora_core/resources/agora.py:1092
+#: agora_core/resources/agora.py:1108
 #, python-format
 msgid ""
 "As administrator of %(agora)s, %(user)s has promoted you to admin of this "
@@ -1817,76 +1844,76 @@ msgstr ""
 "momento, si consideras que el usuario está haciendo un uso incorrecto, por "
 "favor, contacta con los administradores del sitio."
 
-#: agora_core/resources/agora.py:1104
+#: agora_core/resources/agora.py:1120
 #, python-format
 msgid "%(site)s - Promoted to admin of agora %(agora)s"
 msgstr "%(site)s - Has sido designado administrador de %(agora)s"
 
-#: agora_core/resources/agora.py:1152
+#: agora_core/resources/agora.py:1168
 #, python-format
 msgid ""
 "Your admin permissions on %(agora)s have been revoked. Sorry about that!"
 msgstr ""
 "Se han retirado tus permisos de administrador en %(agora)s. ¡Lo sentimos!"
 
-#: agora_core/resources/agora.py:1159
+#: agora_core/resources/agora.py:1175
 #, python-format
 msgid "%(site)s - admin permissions revoked on %(agora)s"
 msgstr "%(site)s - permisos de administrador retirados de %(agora)s."
 
-#: agora_core/resources/agora.py:1197
+#: agora_core/resources/agora.py:1213
 #, python-format
 msgid "You have given up your admin permissions on %(agora)s"
 msgstr "Has renunciado a tus permisos de administrador en %(agora)s"
 
-#: agora_core/resources/agora.py:1205
+#: agora_core/resources/agora.py:1221
 #, python-format
 msgid "%(site)s - admin permissions given up on %(agora)s"
 msgstr "%(site)s - renuncia a los permisos de administrador de %(agora)s."
 
-#: agora_core/resources/agora.py:1248
+#: agora_core/resources/agora.py:1264
 msgid "Your vote is not currently delegated."
 msgstr "Actualmente no estás delegando el voto."
 
-#: agora_core/resources/agora.py:1268
+#: agora_core/resources/agora.py:1284
 #, python-format
 msgid "You have removed your vote delegation from %(agora)s"
 msgstr "Has retirado tu delegación de voto de %(agora)s"
 
-#: agora_core/resources/agora.py:1276
+#: agora_core/resources/agora.py:1292
 #, python-format
 msgid "%(site)s - vote delegation removed from %(agora)s"
 msgstr "%(site)s - delegación de voto retirada en %(agora)s"
 
-#: agora_core/resources/election.py:414
+#: agora_core/resources/election.py:428
 #, python-format
 msgid "Election %(election)s approved at agora %(agora)s. Congratulations!"
 msgstr "Votación %(election)s aprobada en ágora %(agora)s. ¡Enhorabuena!"
 
-#: agora_core/resources/election.py:421
+#: agora_core/resources/election.py:435
 msgid "Election URL"
 msgstr "URL de la votación"
 
-#: agora_core/resources/election.py:427
+#: agora_core/resources/election.py:441
 #, python-format
 msgid "%(site)s - Election %(election)s approved"
 msgstr "%(site)s - Votación %(election)s aprobada"
 
-#: agora_core/resources/user.py:306
+#: agora_core/resources/user.py:309
 msgid "Welcome to this agora"
 msgstr "Bienvenido a este ágora"
 
-#: agora_core/resources/user.py:363
+#: agora_core/resources/user.py:366
 #, python-format
 msgid "%(site)s - invitation to join %(agora)s"
 msgstr "%(site)s - invitación para unirte a %(agora)s"
 
-#: agora_core/tasks/election.py:77 agora_core/tasks/election.py:94
+#: agora_core/tasks/election.py:79 agora_core/tasks/election.py:96
 #, python-format
 msgid "Vote in election %s"
 msgstr "Vota en la votación %s"
 
-#: agora_core/tasks/election.py:167 agora_core/tasks/election.py:215
+#: agora_core/tasks/election.py:169 agora_core/tasks/election.py:217
 #, python-format
 msgid "Election results for %s"
 msgstr "Resultados de la votación para %s"
@@ -2444,12 +2471,12 @@ msgid "Follow a friend. Create a delegate. Comment. Participate."
 msgstr "Sigue a un amigo. Crea un delegado. Comenta. Participa."
 
 #: agora_core/templates/agora_core/home_loggedin_activity.html:70
-#: templates/base.html:149
+#: templates/base.html:148
 msgid "Follow on Twitter"
 msgstr "Seguir en Twitter"
 
 #: agora_core/templates/agora_core/home_loggedin_activity.html:71
-#: templates/base.html:152
+#: templates/base.html:151
 msgid "Like in Facebook"
 msgstr "Me gusta en Facebook"
 
@@ -2458,7 +2485,7 @@ msgid "Follow in Identi.ca"
 msgstr "Seguir en Identi.ca"
 
 #: agora_core/templates/agora_core/home_loggedin_activity.html:73
-#: templates/base.html:158
+#: templates/base.html:157
 msgid "+1 in Google Plus"
 msgstr "+1 en Google Plus"
 
@@ -2875,14 +2902,13 @@ msgstr "Hola %(to_email)s,"
 #: agora_core/templates/agora_core/emails/join_invitation.html:6
 #, python-format
 msgid ""
-"%(inviter)s has invited you to join him/her at <a href=\"%(protocol)s://"
-"%(site_domain)s%(agora_url)s\">%(agora_fullname)s</a>. Please <a href="
-"\"%(protocol)s://%(site_domain)s%(agora_url)s\">follow this link</a> to "
-"complete your registration and join the agora:"
+"%(inviter)s has invited you to join him/her at <a href=\"%(agora_url)s\">"
+"%(agora_fullname)s</a>. Please <a href=\"%(agora_url)s\">follow this link</"
+"a> to complete your registration and join the agora:"
 msgstr ""
-"%(inviter)s te ha invitado a participar en el ágora <a href=\"%(protocol)s://"
-"%(site_domain)s%(agora_url)s\">%(agora_fullname)s</a>. Haz clic sobre <a "
-"href=\"%(protocol)s://%(site_domain)s%(agora_url)s\">este enlace</a> para "
+"%(inviter)s te ha invitado a participar en el ágora <a href=\"%(agora_url)s\">"
+"%(agora_fullname)s</a>. Haz clic sobre <a "
+"href=\"(agora_url)s\">este enlace</a> para "
 "completar el registro y unirte al ágora:"
 
 #: agora_core/templates/agora_core/emails/join_invitation.html:13
@@ -3070,7 +3096,7 @@ msgstr ""
 "\"%(protocol)s://%(site_domain)s\">%(site_domain)s</a>:"
 
 #: agora_core/templates/agora_core/emails/user_mail.html:11
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This is %(from_fullname)s’s profile in the website: <a href=\"%(protocol)s://"
 "%(site_domain)s%(from_url)s\">%(protocol)s://%(site_domain)s%(from_url)s</a>"
@@ -3088,7 +3114,7 @@ msgstr ""
 "%(site_domain)s:"
 
 #: agora_core/templates/agora_core/emails/user_mail.txt:7
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This is %(from_fullname)s’s profile in the website: %(protocol)s://"
 "%(site_domain)s%(from_url)s"
@@ -3200,7 +3226,7 @@ msgstr ""
 "emitido %(num_votes)s votos directos.\n"
 "                            "
 
-#: agora_core/templatetags/agora_utils.py:142
+#: agora_core/templatetags/agora_utils.py:146
 msgid ""
 "Internationalized format for a date, see python documentation for strftime "
 "for more details."
@@ -3208,7 +3234,7 @@ msgstr ""
 "Formato internacional para una fecha, ver la documentación de python para "
 "strftime para más detalles."
 
-#: misc/utils.py:84
+#: misc/utils.py:85
 msgid "Enter valid JSON"
 msgstr "Introduce JSON válido"
 
@@ -3238,71 +3264,286 @@ msgstr "<p>Una nueva forma de</p><h1>Tomar decisiones en grupo</h1>"
 
 #: templates/base.html:81
 msgid "Participate"
-msgstr "Participar"
+msgstr "Participa"
 
-#: templates/base.html:82
-msgid "Explore"
-msgstr "Explorar"
-
-#: templates/base.html:87
+#: templates/base.html:86
 msgid ""
-"An indispensable tool to lead an organization in a democratic manner. Its "
-"delegation system reflects trust relationships"
+"It's a way to approach people and let people come to us, to share "
+"responsability"
 msgstr ""
-"Una herramienta indispensable para llevar una organización de una forma "
-"democrática. Su sistema de delegación refleja las relaciones de confianza"
+"Es una nueva forma de acercarse a la gente y permitir que nos conozcan, de "
+"compartir responsabilidad"
 
-#: templates/base.html:89
-msgid "Eduardo Robles Elvira, Cofounder of Wadobo"
-msgstr "Eduardo Robles Elvira, Cofundador de Wadobo"
+#: templates/base.html:88
+msgid "Joan Baldoví, representative in Congress of Deputies (Spain)"
+msgstr "Joan Baldoví, diputado en el Congreso de los Diputados (España)"
 
-#: templates/base.html:110
+#: templates/base.html:109
 msgid "Discover"
 msgstr "Descubre"
 
-#: templates/base.html:113
+#: templates/base.html:112
 msgid "About"
 msgstr "Acerca de"
 
-#: templates/base.html:116
+#: templates/base.html:115
 msgid "Libre Software"
 msgstr "Software Libre"
 
-#: templates/base.html:119
+#: templates/base.html:118
 msgid "Blog"
 msgstr ""
 
-#: templates/base.html:122
+#: templates/base.html:121
 msgid "Status"
 msgstr "Estado"
 
-#: templates/base.html:128
+#: templates/base.html:127
 msgid "Serious Stuff"
 msgstr "Cosas Serias"
 
-#: templates/base.html:131
+#: templates/base.html:130
 msgid "Terms of Service"
 msgstr "Términos del Servicio"
 
-#: templates/base.html:134
+#: templates/base.html:133
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
-#: templates/base.html:140
+#: templates/base.html:139
 msgid "Contact Us"
 msgstr "Contáctanos"
 
-#: templates/base.html:146
+#: templates/base.html:145
 msgid "Be Social"
 msgstr "Socializa"
 
-#: templates/base.html:155
+#: templates/base.html:154
 msgid "Follow in Indenti.ca"
 msgstr "Seguir en Identi.ca"
 
-#: templates/base.html:163
+#: templates/base.html:162
 msgid "Powered by"
 msgstr "Funciona con"
+
+#~ msgid ""
+#~ "<h3 style=\"text-align: justify;\">Agora Voting is a free software system "
+#~ "supporting secure online elections scaling to hundreds or thousands of "
+#~ "voters: open primaries, institutional elections, public consultation, "
+#~ "referenda. We provide professional solutions for democratic innovation.</"
+#~ "h3>\n"
+#~ "<br/>\n"
+#~ "<p style=\"text-align: justify;\">Agora is free software and is currently "
+#~ "in use by small communities at no charge. However, we realize that for "
+#~ "higher stakes and official elections it is necessary provide professional "
+#~ "and reliable services to ensure the success and validity of the voting "
+#~ "process. As the developers of the software we are uniquely qualified to "
+#~ "provide these services.</p>\n"
+#~ "<br/>\n"
+#~ "<br/>\n"
+#~ "<h4 >Benefits</h4>\n"
+#~ "<br/>\n"
+#~ "<h3>Easy to use</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "A simple, functional interface supporting desktops and tablets allows any "
+#~ "individual, without prior training or qualifications, to vote in a few "
+#~ "easy steps.\n"
+#~ "</p>\n"
+#~ "\n"
+#~ "<h3>Census and authentication</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Authentication is the first step in a trusted voting system. Agora "
+#~ "supports several authentication methods as well as custom integrations, "
+#~ "including external census and certificate-based authentication, ensuring "
+#~ "identity security at all times.</p>\n"
+#~ "\n"
+#~ "<h3>\n"
+#~ "Used in Spanish Congress</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Despite being innovative, the technology of Agora Voting has already been "
+#~ "used successfully in Spanish Parliament in through one of its members on "
+#~ "several occasions. Additionally, Agora Voting is based on the same "
+#~ "technology deployed in Norwegian general elections in 2013.</p>\n"
+#~ "\n"
+#~ "<h3>\n"
+#~ "Free software</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Agora Voting is a free software project developed by a community. An "
+#~ "important feature of this model is that the source code is freely "
+#~ "available and publicly auditable. This makes Agora Voting transparent and "
+#~ "reliable, and serves to demonstrate the quality of our development and "
+#~ "consulting services. A free software model also avoids problems of vendor "
+#~ "locking, and promotes technology independence, something that other "
+#~ "propietary-based solutions cannot offer.</p>\n"
+#~ "\n"
+#~ "<h3>\n"
+#~ "Consulting and customization</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Each voting process has its own unique requirements and procedures. Our "
+#~ "experience with election processes means we can cover these specific "
+#~ "needs in a professional and reliable manner.</p>\n"
+#~ "\n"
+#~ "<br/>\n"
+#~ "<br/>\n"
+#~ "<h4>\n"
+#~ "Security</h4>\n"
+#~ "<br/>\n"
+#~ "<h3>Vote secrecy</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "Our technology includes high security end to end encryption, voter "
+#~ "privacy is protected from the moment of ballot casting at the voting "
+#~ "booth throughout the entire election process.</p>\n"
+#~ "\n"
+#~ "<h3>\n"
+#~ "Secure secret sharing</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "The strength of our system resides in mathematical mechanisms that serve "
+#~ "as analogues of of traditional election scrutineers (also known as poll-"
+#~ "watchers) who oversee elections processes to ensure correctness and thus "
+#~ "attain trust from the general public. In our system, election "
+#~ "cryptographic keys are generated in a distributed fashion by a group of "
+#~ "authorities that guarantee the secrecy of the vote and the correctness of "
+#~ "the tallying process.</p>\n"
+#~ "\n"
+#~ "<h3>\n"
+#~ "Auditable and verifiable</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "As well as enabling secure secret sharing, the technology in Agora Voting "
+#~ "allows independent public verification by third parties using simple "
+#~ "tools, as well auditing by experts, of the entire election process, from "
+#~ "creation, to vote casting and finally tallying.</p>\n"
+#~ "\n"
+#~ "<h3>\n"
+#~ "Contact us\n"
+#~ "</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "If you would like to procure comprehensive professional services for "
+#~ "elections or referenda, require custom development services, or would "
+#~ "like to make any other inquiry, please contact us at <a href=\"mailto:"
+#~ "agora@agoravoting.com\">agora@agoravoting.com</a>.</p>\n"
+#~ "\n"
+#~ "\n"
+#~ msgstr ""
+#~ "<h3 style=\"text-align: justify;\">Agora Voting es un sistema software "
+#~ "libre ideal para votaciones seguras online donde participan cientos o "
+#~ "miles de personas: primarias abiertas,  elecciones institucionales, "
+#~ "consultas ciudadanas, referéndums. Proveemos soluciones profesionales de "
+#~ "innovación democrática.</h3>\n"
+#~ "<br/>\n"
+#~ "<p style=\"text-align: justify;\">Agora es software libre y está siendo "
+#~ "utilizado por pequeñas comunidades de forma gratuita. No obstante sabemos "
+#~ "que para votaciones sensibles e importantes es necesario contratar un "
+#~ "servicio profesional y confiable para asegurar el éxito del proceso "
+#~ "electoral. ¿Quien mejor para ofrecer este servicio que los "
+#~ "desarrolladores de la herramienta?</p>\n"
+#~ "<br/>\n"
+#~ "<br/>\n"
+#~ "<h4 >Beneficios</h4>\n"
+#~ "<br/>\n"
+#~ "<h3>Fácil de usar</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "Con una interfaz de voto intuitiva que funciona en ordenadores y tablets, "
+#~ "permite votar a todo tipo de personas sin formación previa ni "
+#~ "conocimientos informáticos.\n"
+#~ "</p>\n"
+#~ "\n"
+#~ "<h3>Censo y autenticación</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Autenticar al votante es el primer paso para un sistema de voto "
+#~ "confiable. Agora soporta integrar múltiples formas de autenticación "
+#~ "incluyendo censos externos y el certificado de la FNMT para poder "
+#~ "facilitar la autenticación, manteniendo la seguridad en todo momento.</"
+#~ "p>\n"
+#~ "\n"
+#~ "<h3>Probado en el Congreso</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Aun siendo una tecnología innovadora, la tecnología de Agora Voting ya ha "
+#~ "sido utilizada con éxito múltiples veces la cámara del Congreso de los "
+#~ "Diputados en España a través de uno de sus diputados. Además nos basamos "
+#~ "en la misma tecnología de voto seguro que fue usada en las elecciones "
+#~ "general de Noruega en 2013.</p>\n"
+#~ "\n"
+#~ "<h3>Software libre</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Agora Voting es un proyecto de software libre que se desarrolla en "
+#~ "comunidad, por lo que el código es públicamente auditable y transparente. "
+#~ "Además, esto permite asegurar una independencia tecnológica que no pueden "
+#~ "prometer otras soluciones privativas, y demuestra que el nuestro es un "
+#~ "servicio de desarrollo, consultoría y de know-how sobre votaciones de la "
+#~ "máxima calidad. </p>\n"
+#~ "\n"
+#~ "<h3>Consultoría y adaptación de necesidades</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Cada proceso de votación suele tener unas necesidades y casuísticas "
+#~ "específicas y singulares. Nuestra experiencia en comicios electorales nos "
+#~ "permiten cubrir sus necesidades de forma profesional.</p>\n"
+#~ "\n"
+#~ "<br/>\n"
+#~ "<br/>\n"
+#~ "<h4>\n"
+#~ "Seguridad</h4>\n"
+#~ "<br/>\n"
+#~ "<h3>Voto secreto</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "Contamos con un sistema de cifrado punto a punto de alta seguridad en el "
+#~ "que el voto se cifra en la cabina de votación, de manera que se preserva "
+#~ "el secreto del voto en todo momento. </p>\n"
+#~ "\n"
+#~ "<h3>Seguridad compartida</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "La fortaleza de nuestro sistema reside en un sistema análogo a los "
+#~ "apoderados e interventores en las elecciones tradicionales, donde  la "
+#~ "clave cifrada de la votación se genera de forma distribuida por un "
+#~ "conjunto de autoridades independientes, que velan por el secreto del voto "
+#~ "y son las que ejecutan el recuento.</p>\n"
+#~ "\n"
+#~ "<h3>Auditable y verificable</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "\n"
+#~ "Adicionalmente al sistema de se seguridad compartida, la solución de "
+#~ "Agora Voting permite  ser auditada por terceros de forma sencilla y por "
+#~ "expertos durante todo el proceso de la votación, desde la creación, "
+#~ "durante el periodo de votación, y una vez hecho el recuento.</p>\n"
+#~ "\n"
+#~ "<h3>\n"
+#~ "Contacta con nosotros\n"
+#~ "</h3>\n"
+#~ "<p style=\"text-align: justify;\">\n"
+#~ "Si necesitas que te proveamos de un servicio profesional integrado para "
+#~ "una votación o referéndum, si quieres que te hagamos un presupuesto, una "
+#~ "adaptación de la herramienta, o realizarnos cualquier otro tipo de "
+#~ "consulta, por favor no dudes en ponerte en contacto con nosotros: <a href="
+#~ "\"mailto:agora@agoravoting.com\">agora@agoravoting.com</a></p>\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+
+#~ msgid "&nbsp; &nbsp; Agora Voting - Professional Services"
+#~ msgstr "&nbsp; &nbsp; Agora Voting - Servicios Profesionales"
+
+#~ msgid "Explore"
+#~ msgstr "Explorar"
+
+#~ msgid ""
+#~ "An indispensable tool to lead an organization in a democratic manner. Its "
+#~ "delegation system reflects trust relationships"
+#~ msgstr ""
+#~ "Una herramienta indispensable para llevar una organización de una forma "
+#~ "democrática. Su sistema de delegación refleja las relaciones de confianza"
+
+#~ msgid "Eduardo Robles Elvira, Cofounder of Wadobo"
+#~ msgstr "Eduardo Robles Elvira, Cofundador de Wadobo"
 
 #~ msgid "a month"
 #~ msgstr "un mes"
@@ -3501,8 +3742,8 @@ msgstr "Funciona con"
 #~ "<p>Agora URL: <a href=\"%(protocol)s://%(site_domain)s%(agora_url)s\">"
 #~ "%(agora_full_name)s</a></p>\n"
 #~ "\n"
-#~ "<p>Delegator URL: <a href=\"%(protocol)s://%(site_domain)s%(delegator_url)"
-#~ "s\">%(delegator_name)s</a></p>\n"
+#~ "<p>Delegator URL: <a href=\"%(protocol)s://%(site_domain)s"
+#~ "%(delegator_url)s\">%(delegator_name)s</a></p>\n"
 #~ "\n"
 #~ msgstr ""
 #~ "\n"
@@ -3576,9 +3817,9 @@ msgstr "Funciona con"
 #~ "\n"
 #~ "<blockquote>%(comment)s</blockquote>\n"
 #~ "\n"
-#~ "<p>This is %(from_fullname)s profile in the website: <a href=\"%(protocol)"
-#~ "s://%(site_domain)s%(from_url)s\">%(protocol)s://%(site_domain)s"
-#~ "%(from_url)s</a></p>\n"
+#~ "<p>This is %(from_fullname)s profile in the website: <a href="
+#~ "\"%(protocol)s://%(site_domain)s%(from_url)s\">%(protocol)s://"
+#~ "%(site_domain)s%(from_url)s</a></p>\n"
 #~ msgstr ""
 #~ "Hola %(to_fullname)s,\n"
 #~ "\n"

@@ -22,6 +22,9 @@
             <a href="#tab-user" data-toggle="tab"><%= gettext("User settings") %></a>
         </li>
         <li>
+            <a href="#tab-email" data-toggle="tab"><%= gettext("Email") %></a>
+        </li>
+        <li>
             <a href="#tab-account" data-toggle="tab"><%= gettext("Account") %></a>
         </li>
     </ul>
@@ -39,7 +42,7 @@
                         <div class="controls">
                             <input class="textinput textInput" id="id_first_name"
                             maxlength="30" name="first_name" type="text"
-                            value="<%= first_name %>">
+                            value="<%- first_name %>">
 
                             <p class="help-block" id="hint_id_first_name">
                                 <%= gettext("Example: Pepito de los Palotes") %>
@@ -56,7 +59,7 @@
                             <input class="textinput textInput"
                             id="id_short_description" maxlength="140"
                             name="short_description" type="text"
-                            value="<%= short_description %>" />
+                            value="<%- short_description %>" />
 
                             <p class="help-block" id="hint_id_short_description">
                                 <%= gettext("Say something about yourself (140 chars max)") %>
@@ -94,7 +97,7 @@
             <div class='row user-picture'>
                 <div class='span3'>
                     <div class='large-user-avatar avatar-canvas' id='avatar-preview'>
-                    <img alt=""src="<%= big_mugshot %>"></div>
+                    <img alt=""src="<%- big_mugshot %>"></div>
                 </div>
 
                 <div class='span3'>
@@ -106,7 +109,7 @@
                                 <div class='medium-user-avatar avatar-canvas' id=
                                 'image-option-gravatar'>
                                     <span>
-                                        <img alt="" src="<%= gravatar_mugshot %>">
+                                        <img alt="" src="<%- gravatar_mugshot %>">
                                     </span>
                                 </div>
 
@@ -123,7 +126,7 @@
                                 <div class='medium-user-avatar avatar-canvas' id=
                                 'image-option-gravatar'>
                                     <span>
-                                        <img alt="" src="<%= initials_mugshot %>">
+                                        <img alt="" src="<%- initials_mugshot %>">
                                     </span>
                                 </div>
 
@@ -149,9 +152,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="clearfix"></div>
-
-            <form id="email_form">
+            </form>
+            <form id="lang_form">
                 <fieldset>
                     <legend>
                         <%= gettext("Language") %>
@@ -184,6 +186,10 @@
                         </div>
                     </div>
                 </fieldset>
+            </form>
+        </div>
+        <div id="tab-email" class="tab-pane form-data admin-form span7">
+            <form id="email_form">
                 <fieldset>
                     <legend>
                         <%= gettext("Email settings") %>
@@ -197,13 +203,31 @@
                         <div class="controls">
                             <input class="required textinput textInput" id="id_email"
                             maxlength="75" name="email" type="text"
-                            value="<%= email %>"/>
+                            value="<%- email %>"/>
 
                             <p class="help-block" id="hint_id_email">
                                 <%= gettext("Email is visible by agora admins") %>
                             </p>
                         </div>
                     </div>
+
+                <% if (has_current_password) { %>
+                    <div class="control-group" id="div_id_current_password2">
+                        <label class="control-label" for="id_current_password2">
+                            <%= gettext("Current password") %>
+                        </label>
+
+                        <div class="controls">
+                            <input class="required textinput textInput"
+                            id="id_current_password2" name="current_password2"
+                            type="password" />
+
+                            <p class="help-block" id="hint_id_current_password2">
+                                <%= gettext("Provide your current password for security, required field") %>
+                            </p>
+                        </div>
+                    </div>
+                <% } %>
 
                     <div class="control-group" id="div_id_email_updates">
                         <div class="controls">

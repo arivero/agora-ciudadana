@@ -12,6 +12,7 @@ from django.contrib.markup.templatetags.markup import textile
 from django.utils.translation import gettext as _
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404
+from django.utils.crypto import constant_time_compare
 
 from userena import settings as userena_settings
 from userena import forms as userena_forms
@@ -19,7 +20,8 @@ from userena.models import UserenaSignup
 
 from agora_site.misc.utils import FormRequestMixin
 from agora_site.agora_core.forms.comment import COMMENT_MAX_LENGTH
-from agora_site.misc.utils import send_mass_html_mail, get_base_email_context
+from agora_site.misc.utils import (send_mass_html_mail, get_base_email_context,
+                                   clean_html)
 
 class UsernameAvailableForm(django_forms.Form, FormRequestMixin):
     def __init__(self, *args, **kwargs):
@@ -54,6 +56,17 @@ class LoginForm(userena_forms.AuthenticationForm):
         else:
             return False
 
+    def save(self):
+        '''
+        Save method to return the apikey
+        '''
+        data = {}
+        if settings.RETURN_APIKEY_ON_LOGIN:
+            data['apikey'] = self.request.user.api_key.key
+
+        return data
+
+
     @staticmethod
     def static_get_form_kwargs(request, data, *args, **kwargs):
         '''
@@ -77,7 +90,7 @@ class SendMailForm(django_forms.Form):
         context = get_base_email_context(self.request)
         context['to'] = self.target_user
         context['from'] = self.request.user
-        context['comment'] = self.cleaned_data['comment']
+        context['comment'] = clean_html(self.cleaned_data['comment'])
         datatuples= [(
             _('Message from %s') % self.request.user.get_profile().get_fullname(),
             render_to_string('agora_core/emails/user_mail.txt',
@@ -137,10 +150,15 @@ class CustomAvatarForm(django_forms.ModelForm):
         return super(CustomAvatarForm, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
+        from django.core.files.images import get_image_dimensions
         user = super(CustomAvatarForm, self).save(commit=False)
         profile = user.get_profile()
 
         avatar = self.cleaned_data['custom_avatar']
+        # prevent pixel flood
+        height, width = get_image_dimensions(avatar)
+        if height > 1024 or width > 1024:
+            raise django_forms.ValidationError(_(u'Too large dimensions.'))
         if profile.mugshot:
             profile.delete_mugshot()
         profile.mugshot = avatar
@@ -178,7 +196,7 @@ class UserSettingsForm(django_forms.ModelForm):
 
     email = django_forms.EmailField(required=False)
 
-    username = django_forms.CharField(required=False)
+    username = django_forms.RegexField(regex=r'^[\.\w_]+$', max_length=30, required=False)
 
     email_updates = django_forms.BooleanField(required=False)
 
@@ -229,6 +247,9 @@ class UserSettingsForm(django_forms.ModelForm):
         user.save()
         return user
 
+    def clean_short_description(self):
+        return clean_html(self.cleaned_data['short_description'])
+
     def clean_email(self):
         '''
         Validate that the email is not already registered with another user
@@ -236,7 +257,10 @@ class UserSettingsForm(django_forms.ModelForm):
         if 'email' not in self.data:
             return None
 
-        if User.objects.filter(email__iexact=self.cleaned_data['email']
+        if self.instance.password != '!' and 'old_password' not in self.data:
+            raise django_forms.ValidationError(_(u'You need to supply the old password.'))
+
+        if User.objects.filter(email=self.cleaned_data['email']
             ).exclude(pk=self.instance.id).exists():
             raise django_forms.ValidationError(_(u'This email is already in '
                 u'use. Please supply a different email.'))
@@ -249,7 +273,7 @@ class UserSettingsForm(django_forms.ModelForm):
         if 'username' not in self.data:
             return None
 
-        if User.objects.filter(username__iexact=self.cleaned_data['username']
+        if User.objects.filter(username=self.cleaned_data['username']
                 ).exclude(pk=self.instance.id).exists():
             raise django_forms.ValidationError(_(u'This username is already in '
                 u'use. Please supply a different username.'))
@@ -259,7 +283,10 @@ class UserSettingsForm(django_forms.ModelForm):
         '''
         Clean old password if needed
         '''
-        if 'password1' not in self.data or self.instance.password == '!':
+        if 'old_password' not in self.data:
+            return None
+
+        if self.instance.password == '!':
             return None
 
         if not self.instance.check_password(self.cleaned_data['old_password']):
@@ -274,6 +301,9 @@ class UserSettingsForm(django_forms.ModelForm):
         if 'password1' not in self.data:
             return None
 
+        if self.instance.password != '!' and 'old_password' not in self.data:
+            raise django_forms.ValidationError(_(u'You need to supply the old password.'))
+
         if 'password2' not in self.data or\
             self.cleaned_data['password1'] != self.data['password2'] or\
             len(self.cleaned_data['password1']) <= 3:
@@ -287,13 +317,20 @@ class UserSettingsForm(django_forms.ModelForm):
         Validates first_name field (which is actually user's full name). If its
         a FNMT authenticated user, this user cannot change the first name.
         '''
+        if 'first_name' not in self.data:
+            return None
+
+        first_name = clean_html(self.cleaned_data['first_name'])
+        if '<' in first_name or '\"' in first_name:
+            raise django_forms.ValidationError(_(u'Invalid first name.'))
+
         profile = self.request.user.get_profile()
         if isinstance(profile.extra, dict) and\
                 profile.extra.has_key('fnmt_cert') and\
-                self.request.user.first_name != self.cleaned_data['first_name']:
+                self.request.user.first_name != first_name:
             raise django_forms.ValidationError(_('FNMT users cannot change their names.'))
 
-        return self.cleaned_data['first_name']
+        return first_name
 
     def clean(self):
         """
@@ -303,6 +340,7 @@ class UserSettingsForm(django_forms.ModelForm):
             raise django_forms.ValidationError(_('You need to be '
                 'authenticated'))
 
+        self.cleaned_data['biography'] = clean_html(self.cleaned_data['biography'])
         return self.cleaned_data
 
     class Meta:
@@ -330,7 +368,7 @@ class APISignupForm(django_forms.Form):
     be accepted.
 
     """
-    first_name = django_forms.CharField(required=True)
+    first_name = django_forms.RegexField(regex=r'^[_\.\w]+$', max_length=140, required=True)
     username = django_forms.RegexField(regex=userena_forms.USERNAME_RE,
                                 max_length=30, required=True,
                                 error_messages={'invalid': _('Username must contain only letters, numbers, dots and underscores.')})
@@ -349,7 +387,7 @@ class APISignupForm(django_forms.Form):
 
         """
         try:
-            user = User.objects.get(username__iexact=self.cleaned_data['username'])
+            user = User.objects.get(username=self.cleaned_data['username'])
         except User.DoesNotExist:
             pass
         else:
@@ -360,14 +398,16 @@ class APISignupForm(django_forms.Form):
 
     def clean_email(self):
         """ Validate that the e-mail address is unique. """
-        if User.objects.filter(email__iexact=self.cleaned_data['email']):
+        if User.objects.filter(email=self.cleaned_data['email']):
             raise django_forms.ValidationError(_('This email is already in use. Please supply a different email.'))
         return self.cleaned_data['email']
 
     def clean_activation_secret(self):
         if len(self.cleaned_data['activation_secret']) > 0:
-            if self.cleaned_data['activation_secret'] != settings.AGORA_API_AUTO_ACTIVATION_SECRET:
-                raise django_forms.ValidationError(_('Invalid activation secret. ' + settings.AGORA_API_AUTO_ACTIVATION_SECRET + "!= " + self.cleaned_data['activation_secret']))
+            if not constant_time_compare(
+                    self.cleaned_data['activation_secret'],
+                    settings.AGORA_API_AUTO_ACTIVATION_SECRET):
+                raise django_forms.ValidationError(_('Invalid activation secret. '))
             if not settings.AGORA_ALLOW_API_AUTO_ACTIVATION:
                 raise django_forms.ValidationError(_('Auto activation not allowed.'))
         return self.cleaned_data['activation_secret']

@@ -8,7 +8,7 @@ from agora_site.agora_core.resources.castvote import CastVoteResource
 from agora_site.agora_core.forms import PostCommentForm, election_questions_validator
 from agora_site.agora_core.forms.election import VoteForm as ElectionVoteForm
 from agora_site.misc.utils import (geolocate_ip, get_base_email_context,
-    JSONFormField, JSONApiField, ISODateTimeFormField)
+    JSONFormField, JSONApiField, ISODateTimeFormField, clean_html)
 from agora_site.misc.decorators import permission_required
 
 from tastypie import fields, http
@@ -37,7 +37,6 @@ from django.db.models import Q
 from django import forms as django_forms
 
 import datetime
-
 
 
 DELEGATION_URL = "http://example.com/delegation/has/no/url/"
@@ -104,9 +103,24 @@ class ElectionAdminForm(ModelForm):
         super(ElectionAdminForm, self).__init__(**kwargs)
 
     def clean(self, *args, **kwargs):
+        import markdown
+        import html2text
+        from agora_site.agora_core.templatetags.string_tags import urlify_markdown
+        from django.template.defaultfilters import truncatewords_html
+
         cleaned_data = super(ElectionAdminForm, self).clean()
         if not self.instance.has_perms('edit_details', self.request.user):
             raise ImmediateHttpResponse(response=http.HttpForbidden())
+
+        cleaned_data['pretty_name'] = clean_html(cleaned_data['pretty_name'], True)
+        cleaned_data['description'] = clean_html(cleaned_data['description'])
+
+        short_description = cleaned_data['short_description']
+        short_description = html2text.html2text(short_description[:140]).strip()
+        short_description = markdown.markdown(urlify_markdown(short_description),
+                                     safe_mode="escape", enable_attributes=False)
+        cleaned_data['short_description'] = truncatewords_html(short_description, 25)[:140]
+
 
         from_date = cleaned_data.get("from_date", None)
         to_date = cleaned_data.get("to_date", None)

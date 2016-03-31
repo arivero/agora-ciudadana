@@ -54,10 +54,13 @@ class BaseSTV(BaseVotingSystem):
         '''
         error = django_forms.ValidationError(_('Invalid questions format'))
 
+        if question['question'].strip() != clean_html(question['question'], True):
+            raise error
+
         if 'num_seats' not in question or\
             not isinstance(question['num_seats'], int) or\
             question['num_seats'] < 1:
-            return error
+            raise error
 
         if question['a'] != 'ballot/question' or\
             not isinstance(question['min'], int) or question['min'] < 0 or\
@@ -98,6 +101,9 @@ class BaseSTV(BaseVotingSystem):
                 raise error
 
             if answer['value'] in answer_values:
+                raise error
+
+            if answer['value'].strip() != clean_html(answer['value'], True).replace("\n", ""):
                 raise error
             answer_values.append(answer['value'])
 
@@ -270,7 +276,7 @@ class BaseSTVTally(BaseTally):
             ans = u'"%s"\n' % name
             self.ballots_file.write(ans)
 
-        q = '"%s"\n' % question['question']
+        q = '"%s"\n' % question['question'].replace("\n", "").replace("\"", "")
         q.encode('utf-8')
         self.ballots_file.write(q)
         self.ballots_file.close()

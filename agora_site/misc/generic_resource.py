@@ -1,15 +1,17 @@
+from agora_site.misc.utils import FakeHttpRequest
 
 from simplejson.decoder import JSONDecodeError
 
 from django.conf import settings
 from django.core.paginator import InvalidPage
-from django.http import Http404
+from django.http import Http404, HttpResponseBadRequest
 
 from django.template import RequestContext
 from django.utils import simplejson
 from django.views.decorators.csrf import csrf_exempt
 
 from tastypie.authorization import Authorization
+from tastypie.http import HttpForbidden
 from tastypie.authentication import (ApiKeyAuthentication, MultiAuthentication,
                                      SessionAuthentication)
 from tastypie.resources import ModelResource
@@ -28,9 +30,12 @@ class GenericResourceMixin:
         '''
         Useful for get deserialized data
         '''
-        return self.deserialize(request,
-                                request.raw_post_data,
-                                format=request.META.get('CONTENT_TYPE', 'application/json'))
+        try:
+            return self.deserialize(request,
+                                    request.raw_post_data,
+                                    format=request.META.get('CONTENT_TYPE', 'application/json'))
+        except:
+            return HttpResponseBadRequest("Sorry, you did not provide valid input data")
 
     def determine_format(self, request):
         """
@@ -47,7 +52,7 @@ class GenericResourceMixin:
         return http_method(serialized,
             content_type=build_content_type(desired_format))
 
-    def wrap_form(self, form_class, method="POST", raw=False):
+    def wrap_form(self, form_class, method="POST", raw=False, anon=False):
         """
         Creates a view for a given form class, which calls to is_valid()
         and save() when needed. You can get the form args reimplementing
@@ -56,6 +61,8 @@ class GenericResourceMixin:
         """
         @csrf_exempt
         def wrapper(request, *args, **kwargs):
+            if not anon and not request.user.is_authenticated():
+                    self.is_authenticated(request)
             try:
                 desired_format = self.determine_format(request)
                 if method == "POST" or method== "PUT":
@@ -139,8 +146,11 @@ class GenericResourceMixin:
         self.throttle_check(request)
 
         # Do the query.
-        offset = int(request.GET.get('offset', 0))
-        limit = min(int(request.GET.get('limit', 20)), 1000)
+        try:
+            offset = max(0, int(request.GET.get('offset', 0)))
+            limit = max(1, min(int(request.GET.get('limit', 20)), 1000))
+        except:
+            return HttpResponseBadRequest("Sorry, you did not provide valid input data")
         paginator = Paginator(request.GET, queryset)
 
         try:
@@ -185,7 +195,25 @@ class GenericResourceMixin:
 # we can make sure its GenericResourceMixin.api_field_from_django_field is
 # used
 class GenericResource(GenericResourceMixin, ModelResource):
-    pass
+    def wrap_view(self, view, anon=False):
+        """
+        Adds the authentication call to every view
+        """
+        def authenticated(cb):
+            def wrap(request, *args, **kwargs):
+                fake = type(request) == FakeHttpRequest
+                if not fake and not request.user.is_authenticated():
+                    self.is_authenticated(request)
+                return cb(request, *args, **kwargs)
+            return wrap
+
+        wrapper = super(GenericResource, self).wrap_view(view)
+
+        if not anon:
+            wrapper = authenticated(wrapper)
+
+        return wrapper
+
 
 from tastypie.authentication import Authentication
 class ReadOnlyAuthentication(Authentication):
@@ -215,8 +243,8 @@ class GenericMeta:
     detail_allowed_methods = ['get', 'post', 'put', 'delete']
     authorization = Authorization()
     serializer = CustomNoneSerializer()
-    authentication = MultiAuthentication(ReadOnlyAuthentication(),
-        SessionAuthentication(), ApiKeyAuthentication())
+    authentication = MultiAuthentication(SessionAuthentication(),
+        ApiKeyAuthentication(), ReadOnlyAuthentication())
     always_return_data = True
     include_resource_uri = False
     cache = GenericCache(timeout = settings.CACHE_MIDDLEWARE_SECONDS)

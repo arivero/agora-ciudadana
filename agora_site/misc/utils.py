@@ -17,7 +17,7 @@ from django.core.mail import (EmailMultiAlternatives, EmailMessage, send_mail,
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.db.models import signals
-from django.utils import simplejson as json
+import json
 from django.views.generic import CreateView
 from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
@@ -39,6 +39,7 @@ from guardian.core import ObjectPermissionChecker
 from guardian.models import UserObjectPermission, GroupObjectPermission
 from guardian.utils import get_identity
 
+import html2text
 
 class FormRequestMixin(object):
     '''
@@ -363,6 +364,11 @@ class GenericForeignKeyField(fields.ToOneField):
         return super(GenericForeignKeyField, self).build_related_resource(*args, **kwargs)
 
 
+class customstr(str):
+    def get(k, d=None):
+        return ""
+
+
 # the following is from
 # http://gdorn.circuitlocution.com/blog/2012/11/21/using-tastypie-inside-django.html
 
@@ -392,9 +398,9 @@ def rest(path, query={}, data={}, headers={}, method="GET", request=None):
     hreq.path = '/api/v1' + path
     hreq.GET = query
     if isinstance(data, basestring):
-        hreq.POST = data
+        hreq.POST = customstr(data)
     else:
-        hreq.POST = json.dumps(data)
+        hreq.POST = customstr(json.dumps(data))
     hreq.META = headers
     hreq.method = method
     if request:
@@ -461,3 +467,25 @@ class FakeHttpRequest(HttpRequest):
         so all FakeHttpRequests are encoded as 'none/none'.
         """
         return 'none/none'
+
+
+def clean_html(text, to_plaintext=False):
+    if isinstance(text, str):
+        text = unicode(text, 'utf-8')
+    text = text.strip()
+    if not len(text):
+        return text
+
+    import bleach
+    ALLOWED_TAGS = bleach.ALLOWED_TAGS
+    ALLOWED_TAGS.append('p')
+    html = bleach.clean(text, tags=ALLOWED_TAGS, strip=True)
+
+    from lxml.html import html5parser
+    doc = html5parser.fromstring(html)
+    plaintext = doc.xpath("string()")
+
+    if plaintext == text:
+        return plaintext
+
+    return html

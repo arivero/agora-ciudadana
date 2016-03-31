@@ -12,15 +12,15 @@ TEMPLATE_DEBUG = DEBUG
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    #'filters': {
-        #'require_debug_false': {
-            #'()': 'django.utils.log.RequireDebugFalse'
-        #}
-    #},
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            #'filters': ['require_debug_false'],
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },
@@ -70,6 +70,7 @@ LANGUAGES = (
     ('es', _('Spanish')),
     ('en', _('English')),
     ('gl', _('Galician')),
+    ('eu', _('Basque')),
 )
 
 SITE_ID = 1
@@ -94,6 +95,7 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -102,6 +104,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_auth.middleware.SocialAuthExceptionMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -119,6 +122,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'agora_site.misc.context_processor.settings.MEDIA_URL',
     'agora_site.misc.context_processor.settings.AUTHENTICATION_BACKENDS',
     'agora_site.misc.context_processor.settings.AGORA_FNMT_BASE_URL',
+    'agora_site.misc.context_processor.settings.SHOW_PROFESSIONAL_SERVICES_LINK',
 )
 
 ROOT_URLCONF = 'agora_site.urls'
@@ -172,8 +176,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.messages',
+    # WARNING! you should disable admin in production sites for security:
     'django.contrib.admin',
-    'django.contrib.admindocs',
     'django.contrib.comments',
     'django.contrib.markup',
     'django.contrib.flatpages',
@@ -189,9 +193,11 @@ INSTALLED_APPS = (
     'agora_site.agora_core',
     'agora_site.accounts',
     'haystack',
+    'captcha',
     'djcelery',
     'guardian',
-    'djsgettext'
+    'djsgettext',
+    'djangosecure'
 )
 
 # Cache settings
@@ -269,6 +275,7 @@ AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
 )
 
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_SLUGIFY_USERNAMES = True
 SOCIAL_AUTH_UUID_LENGTH = 2
 
@@ -283,6 +290,8 @@ LOGIN_ERROR_URL    = '/accounts/signin/'
 # Django crispy forms settings
 
 CRISPY_FAIL_SILENTLY = not DEBUG
+
+CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 # Haystack
 
@@ -381,7 +390,21 @@ VOTING_METHODS = (
     'agora_site.agora_core.models.voting_systems.meek_stv.MeekSTV',
 )
 
+# change the following for improved security
+
 AGORA_USE_HTTPS = False
+
+SECURE_HSTS_SECONDS = 2
+
+SECURE_SSL_REDIRECT = False
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+SECURE_FRAME_DENY = True
+
+SECURE_BROWSER_XSS_FILTER = True
 
 USE_ESI = False
 
@@ -412,6 +435,20 @@ MANY_CACHE_SECONDS = 0
 # sets the max age for calls that need to be very updated
 # set to zero (no-cache) by default
 FEW_CACHE_SECONDS = 0
+
+# Stablishes how many failed login attempts for a given user are allowed before
+# a captcha is shown
+MAX_ALLOWED_FAILED_LOGIN_ATTEMPTS = 5
+
+ALLOWED_HOSTS = [
+    '.local.dev',
+]
+
+# Enable/disable the top navbar link to "Professional services" page
+SHOW_PROFESSIONAL_SERVICES_LINK = False
+
+# Enable/disable the APIKEY response on login
+RETURN_APIKEY_ON_LOGIN = True
 
 try:
     # custom settings is the file where you should set your modifications of the

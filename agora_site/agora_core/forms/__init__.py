@@ -42,6 +42,7 @@ from actstream.actions import follow, unfollow, is_following
 from actstream.signals import action as actstream_action
 from userena.models import UserenaSignup
 from userena import settings as userena_settings
+from captcha.fields import CaptchaField
 
 from agora_site.agora_core.models import Agora, Election, CastVote
 from agora_site.agora_core.tasks.election import (start_election, end_election,
@@ -61,6 +62,12 @@ class CreateAgoraForm(django_forms.ModelForm):
         self.request = request
         self.helper.layout = Layout(Fieldset(_('Create Agora'), 'pretty_name', 'short_description', 'is_vote_secret'))
         self.helper.add_input(Submit('submit', _('Create Agora'), css_class='btn btn-success btn-large'))
+
+    def clean_short_description(self):
+        return clean_html(self.cleaned_data['short_description'])
+
+    def clean_pretty_name(self):
+        return clean_html(self.cleaned_data['pretty_name'], True)
 
     def save(self, *args, **kwargs):
         agora = super(CreateAgoraForm, self).save(commit=False)
@@ -214,6 +221,15 @@ class AgoraAdminForm(django_forms.ModelForm):
         self.helper.layout = Layout(Fieldset(_('General settings'), 'pretty_name', 'short_description', 'biography', 'delegation_policy', 'is_vote_secret', 'membership_policy', 'comments_policy'))
         self.helper.add_input(Submit('submit', _('Save settings'), css_class='btn btn-success btn-large'))
 
+    def clean_short_description(self):
+        return clean_html(self.cleaned_data['short_description'])
+
+    def clean_pretty_name(self):
+        return clean_html(self.cleaned_data['pretty_name'], True)
+
+    def clean_biography(self):
+        return clean_html(self.cleaned_data['biography'])
+
     class Meta:
         model = Agora
         fields = ('pretty_name', 'short_description', 'is_vote_secret', 'delegation_policy',
@@ -286,6 +302,9 @@ class CreateElectionForm(django_forms.ModelForm):
         from_date = cleaned_data.get("from_date", None)
         to_date = cleaned_data.get("to_date", None)
 
+        cleaned_data['pretty_name'] = clean_html(cleaned_data['pretty_name'], True)
+        cleaned_data['description'] = clean_html(cleaned_data['description'])
+
         if not from_date and not to_date:
             return cleaned_data
 
@@ -326,7 +345,7 @@ class CreateElectionForm(django_forms.ModelForm):
 
         short_md = markdown.markdown(urlify_markdown(election.description[:140]),
                                      safe_mode="escape", enable_attributes=False)
-        election.short_description = truncatewords_html(short_md, 25)
+        election.short_description = truncatewords_html(short_md, 25)[:140]
 
         election.url = self.request.build_absolute_uri(reverse('election-view',
             kwargs=dict(username=election.agora.creator.username, agoraname=election.agora.name,
@@ -638,14 +657,20 @@ class ContactForm(django_forms.Form):
         min_length=5, max_length=1000, widget=django_forms.Textarea())
 
     def __init__(self, request, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
         self.request = request
         self.helper = FormHelper()
         if not request.user.is_authenticated():
-            self.helper.layout = Layout(Fieldset(_('Contact'), 'name', 'email', 'subject', 'message'))
+            self.helper.layout = Layout(Fieldset(_('Contact'), 'name', 'email',
+                'subject', 'message', 'captcha'))
+            self.fields.insert(0, 'captcha', CaptchaField())
         else:
             self.helper.layout = Layout(Fieldset(_('Contact'), 'subject', 'message'))
+
+            self.fields['name'].required = False
+            self.fields['email'].required = False
+
         self.helper.add_input(Submit('submit', _('Send message'), css_class='btn btn-success btn-large'))
-        super(ContactForm, self).__init__(*args, **kwargs)
 
     def send(self):
         subject = self.cleaned_data['subject']

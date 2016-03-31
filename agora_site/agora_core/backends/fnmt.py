@@ -24,12 +24,7 @@ from userena.models import UserenaSignup
 
 class FNMTBackend(object):
     """
-    Authenticate against the settings ADMIN_LOGIN and ADMIN_PASSWORD.
-
-    Use the login name, and a hash of the password. For example:
-
-    ADMIN_LOGIN = 'admin'
-    ADMIN_PASSWORD = 'sha1$4e987$afbcf42e21bd417fb71db8c66b321e9fc33051de'
+    Authenticate using the fnmt certificate.
     """
 
     def authenticate(self, cert_pem, full_name, email, nif):
@@ -99,7 +94,7 @@ class FNMTBackend(object):
             # generate a valid new username
             base_username = username = slugify(self.email.split('@')[0])
             while User.objects.filter(username=username).exists():
-                username = base_username + random.randint(0, 100)
+                username = base_username + str(random.randint(0, 100))
         else:
             username = str(uuid4())[:30]
             email = "%s@example.com" % str(uuid4())
@@ -111,6 +106,7 @@ class FNMTBackend(object):
         new_user = UserenaSignup.objects.create_user(username, self.email,
             password, activate_user, False)
         new_user.first_name = self.full_name
+        new_user.password = '!'
         new_user.save()
 
         profile = new_user.get_profile()
